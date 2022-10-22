@@ -5,7 +5,7 @@ require 'yaml'
 
 
 def rgt_api_path(name)
-  config = YAML.safe_load(File.read('config/secret.yml'))
+  config = YAML.safe_load(File.read('config/secrets.yml'))
   'https://serpapi.com/search.json?&engine=google_trends&q='+name+'&dataset=TIMESERIES&api_key='+config['api_key']
 end
 
