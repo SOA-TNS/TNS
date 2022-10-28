@@ -7,29 +7,23 @@ module CodePraise
       @data_source = data_source
     end
 
-    def open_price_compare
-      puts @stock['Name']
-      puts "昨日開盤價為: #{@stock["PreviousDayOpeningRefPrice"]}"
-      puts "今日開盤價為: #{@stock["TodayOpeningRefPrice"]}"
+    def pd_op
+      @stock["PreviousDayOpeningRefPrice"]
     end
-
-    def limit_compare
-      puts @stock["Name"]
-      puts "昨日跌停價為: #{@stock["PreviousDayLimitDown"]}  今日跌停價為: #{@stock["TodayLimitDown"]}"
-      puts "昨日漲停價為: #{@stock["PreviousDayLimitUp"]}  今日漲停價為: #{@stock["TodayLimitUp"]}"
+    def td_op
+      @stock["TodayOpeningRefPrice"]
     end
-
-    def info
-      puts "#{@stock["Name"]}昨日"
-      puts "開盤價為: #{@stock["PreviousDayOpeningRefPrice"]}"
-      puts "跌停價為: #{@stock["PreviousDayLimitDown"]}"
-      puts "漲停價為: #{@stock["PreviousDayLimitUp"]}"
-      puts "收盤價為: #{@stock["PreviousDayPrice"]}"
-      print "\n" 
-      puts "#{@stock["Name"]}今日"
-      puts "開盤價為: #{@stock["TodayOpeningRefPrice"]}"
-      puts "跌停價為: #{@stock["TodayLimitDown"]}"
-      puts "漲停價為: #{@stock["TodayLimitUp"]}" 
+    def pd_ld
+      @stock["PreviousDayLimitDown"]
+    end
+    def td_ld
+      @stock["TodayLimitDown"]
+    end
+    def pd_lu
+      @stock["PreviousDayLimitUp"]
+    end
+    def td_lu
+      @stock["TodayLimitUp"]
     end
   end
 end
