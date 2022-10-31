@@ -5,6 +5,9 @@ describe 'Tests FinMind API library' do
     c.cassette_library_dir= CASSETTES_FOLDER
     c.hook_into:webmock
   end
+
+  stocks = FinMindAPI::FinMindApi.new
+  stocks.dataset("TaiwanStockInfo")
   
   before do
     VCR.insert_cassette CASSETTE_FILE, record: :new_episodes, match_requests_on: %i[method uri headers]
@@ -13,9 +16,6 @@ describe 'Tests FinMind API library' do
   after do
   VCR.eject_cassette
   end
-
-  stocks = FinMindAPI::FinMindApi.new
-  stocks.dataset("TaiwanStockInfo")
   
   describe 'Status' do
     it 'stock_dataset' do
