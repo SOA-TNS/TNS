@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 require_relative 'spec_helper_rgt'
-config = YAML.safe_load(File.read('../config/secrets.yml'))
+
+
 describe 'Tests rgt API library' do
   VCR.configure do |c|
     c.cassette_library_dir = CASSETTES_FOLDER
     c.hook_into :webmock
     c.filter_sensitive_data('<RGT_TOKEN>') { RGT_TOKEN }
   end
-
+  config = YAML.safe_load(File.read('config/secrets.yml'))
   search = GoogleTrend::RgtApi.new(config, 'TSMC')
 
   before do
