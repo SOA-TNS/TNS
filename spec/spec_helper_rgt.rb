@@ -2,18 +2,16 @@
 
 require 'simplecov'
 SimpleCov.start
-
 require 'yaml'
-
 require 'minitest/autorun'
 require 'minitest/rg'
 require 'vcr'
 require 'webmock'
+require_relative '../lib/rgt_api'
 
-require_relative '../lib/rgt.rb'
-CONFIG = YAML.safe_load(File.read('config/secrets.yml'))
-RGT_TOKEN=CONFIG['api_key']
-CORRECT = YAML.safe_load(File.read('spec/fixtures/rgt_results.yml'))
+CONFIG = YAML.safe_load(File.read('../config/secrets.yml'))
+RGT_TOKEN = CONFIG['api_key']
+CORRECT = YAML.safe_load(File.read('fixtures/rgt_results.yml'))
 
 CASSETTES_FOLDER = 'spec/fixtures/cassettes'
 CASSETTE_FILE = 'rgt_api'
