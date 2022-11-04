@@ -26,4 +26,3 @@ Project to gather useful information from FinMind API (v4)
 These are objects that are important to the project, following my own naming conventions:
 
 - FinMindApi (access FinMind API)
-- FinMind (store stock data)
