@@ -3,7 +3,7 @@
 require 'dry-types'
 require 'dry-struct'
 
-module CodePraise
+module GoogleTrend
   module Entity
     class RgtEntity < Dry::Struct
       include Dry.Types
