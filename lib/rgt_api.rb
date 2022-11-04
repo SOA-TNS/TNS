@@ -4,16 +4,17 @@ require 'yaml'
 require 'google_search_results'
 require 'http'
 
-config = YAML.safe_load(File.read('../config/secrets.yml'))
+
 module GoogleTrend
   # access google trend
+  
   class RgtApi
     API_PROJECT_ROOT = 'https://serpapi.com/search.json?'
+  
 
     attr_reader :parameter
 
     def initialize(config, name)
-    
       @parameter = {
         engine: 'google_trends',
         q: name,
