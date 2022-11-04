@@ -1,29 +1,25 @@
 # frozen_string_literal: true
 require 'yaml'
-
+require 'google_search_results' 
 require 'http'
 
-# https://serpapi.com/search.json?engine=google_trends&q=TSMC&data_type=TIMESERIES&api_key=da4bf99b1c382584e582032bcdb8bc698e024a83c5b9d9f44b1c24dd9d7fcbbc
-module CodePraise
-  module GoogleTrend
+module GoogleTrend
+  module Gt
   # access google trend
-    class Api
+    class RgtApi
       API_PROJECT_ROOT = 'https://serpapi.com/search.json?'
+      ENGINE = "google_trends" #1
+      DATA_TYPE = "TIMESERIES" #3
     
       attr_reader :parameter
 
-      def initialize(name)
-        config = YAML.safe_load(File.read('config/secrets.yml'))
-        @parameter = {
-          engine: "google_trends",
-          q: name,
-          data_type: "TIMESERIES",   
-          api_key: config['api_key']    
-        }
+      def initialize(config, name)
+        @name = name #2
+        @apikey = config['api_key'] #4
       end
 
-      def get_jason
-        Request.new(API_PROJECT_ROOT).rgt(@parameter).parse
+      def jason
+        Request.new(API_PROJECT_ROOT).rgt.parse
       end
 
       #get data by url
@@ -32,8 +28,8 @@ module CodePraise
           @resource_root = resource_root
         end
 
-        def rgt(parameter)
-          get(@resource_root + parameter.to_a.collect { |col| col.join('=') }.join('&'))
+        def rgt
+          get("#{@resource_root}engine=#{ENGINE}&q=#{@name}&data_type=#{DATA_TYPE}&api_key=#{@apikey}")
         end
 
         def get(url)
