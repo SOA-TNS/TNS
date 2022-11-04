@@ -43,7 +43,3 @@ module CodePraise
     end
   end
 end
-
-print(CodePraise::GoogleTrend::TrendMapper.new('TSMC').get_rgt.query)
-print("\n")
-print(CodePraise::GoogleTrend::TrendMapper.new('TSMC').get_rgt.time_series)
