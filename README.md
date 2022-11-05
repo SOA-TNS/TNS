@@ -39,5 +39,4 @@ Project to gather useful information from Google Trend API
 
 These are objects that are important to the project, following my own naming conventions:
 
-- rgt (access Google Trend API)
-- rgt_api (store rgt_data)
+- rgt_api (access Google Trend API)
