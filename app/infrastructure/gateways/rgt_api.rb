@@ -14,9 +14,9 @@ module GoogleTrend
       attr_reader :name
       attr_reader :apikey
 
-      def initialize(config, name)
+      def initialize(apikey, name)
         @name = name #2
-        @apikey = config #4
+        @apikey = apikey #4
       end
 
       def jason
