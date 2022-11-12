@@ -46,9 +46,3 @@ module GoogleTrend
     end
   end
 end
-
-#print(GoogleTrend::Gt::TrendMapper.new('TSMC').find)
-#print("\n") 
-#print(GoogleTrend::Gt::TrendMapper.new('apple',"88fc96111ce19cfb3fa4eb149e1aa32df56db927da85503dcd16d2b37e711771").find.time_series)
-#print("\n") 
-#print(GoogleTrend::Gt::TrendMapper.new('TSMC').find.time_series)
