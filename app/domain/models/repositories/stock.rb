@@ -33,7 +33,6 @@ module GoogleTrend
         Entity::RgtEntity.new(
           db_record.to_hash.merge(
             query: db_record.to_hash[:query]
-            #time_series:
           )
         )
       end
