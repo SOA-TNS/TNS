@@ -34,7 +34,6 @@ module GoogleTrend
 
           routing.on String do |qry|
             # GET /project/owner/project
-            puts(qry)
             routing.get do
               data_record = Repository::For.klass(Entity::RgtEntity).find_stock_name(qry)
 
