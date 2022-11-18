@@ -31,7 +31,6 @@ module GoogleTrend
 
         def rgt(name, apikey)
           get("#{@resource_root}engine=#{ENGINE}&q=#{name}&data_type=#{DATA_TYPE}&api_key=#{apikey}")
-          # https://serpapi.com/search.json?engine=google_trends&q="TSMC"&data_type="TIMESERIES"&api_key=da4bf99b1c382584e582032bcdb8bc698e024a83c5b9d9f44b1c24dd9d7fcbbc
         end
 
         def get(url)
