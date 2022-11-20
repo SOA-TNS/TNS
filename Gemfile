@@ -12,7 +12,7 @@ gem 'rake', '~> 13.0'
 
 # Web Application
 gem 'puma', '~> 6'
-gem 'rack-session'
+gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3'
 gem 'slim', '~> 4'
 

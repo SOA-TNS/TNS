@@ -15,7 +15,7 @@ describe 'Tests RGT API library' do
   describe 'Stock information' do
     before do
       @rgt = GoogleTrend::Gt::TrendMapper
-        .new('BTC', RGT_TOKEN)
+        .new('TSLA', RGT_TOKEN)
         .find
     end
 
@@ -26,7 +26,7 @@ describe 'Tests RGT API library' do
     it 'BAD: should raise exception when unauthorized' do
       _(proc do
         GoogleTrend::Gt::TrendMapper
-          .new('BTC', 'BAD_TOKEN')
+          .new('TSLA', 'BAD_TOKEN')
           .find
       end).must_raise GoogleTrend::Gt::RgtApi::Response::Unauthorized
     end
@@ -35,7 +35,7 @@ describe 'Tests RGT API library' do
   describe 'popular values in information' do
     before do
       @rgt = GoogleTrend::Gt::TrendMapper
-        .new('BTC', RGT_TOKEN)
+        .new('TSLA', RGT_TOKEN)
         .find
     end
 

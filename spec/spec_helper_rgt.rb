@@ -13,11 +13,11 @@ require_relative '../require_app'
 require_app
 
 def time_value(file)
-  array = []
-  time_series = file['interest_over_time'] # hash
-  interest_over_time = interest_over_time['timeline_data'] # array
-  interest_over_time.each { |data| array << "#{data['date']} => #{data['values'][0]['value']}" }
-  array.to_s
+  l = []
+  a = file['interest_over_time'] # hash
+  b = a['timeline_data'] # array
+  b.each { |data| l << "#{data['date']} => #{data['values'][0]['value']}" }
+  l.to_s
 end
 
 RGT_TOKEN = GoogleTrend::App.config.RGT_TOKEN

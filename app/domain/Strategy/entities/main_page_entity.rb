@@ -2,6 +2,7 @@
 
 require 'dry-types'
 require 'dry-struct'
+
 require_relative 'second_page_entity'
 
 module GoogleTrend
@@ -11,7 +12,7 @@ module GoogleTrend
 
       attribute :query,     Strict::String
       attribute :risk,      Strict::String
-      attribute :interest_over_time, Strict::String
+      attribute :interest_over_time, String
       def to_attr_hash
         to_hash.except(:id)
       end

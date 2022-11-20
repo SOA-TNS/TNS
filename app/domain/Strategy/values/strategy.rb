@@ -18,6 +18,7 @@ module GoogleTrend
         18.times do |i|
           sum_18 += @extracted_value[i]
         end
+
         [sum_3 / 3, sum_18 / 18]
       end
 

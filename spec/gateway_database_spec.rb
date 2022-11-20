@@ -21,7 +21,7 @@ describe 'Integration Tests of Google Trend API and Database' do
     end
 
     it 'HAPPY: should be able to save stock from Google trend to database' do
-      trend = GoogleTrend::Gt::TrendMapper.new('TSLA', RGT_TOKEN).find
+      trend = GoogleTrend::Gt::TrendMapper.new('BTC', RGT_TOKEN).find
       rebuilt = GoogleTrend::Repository::For.entity(trend).create(trend)
 
       _(rebuilt.query).must_equal(trend.query)

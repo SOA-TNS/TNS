@@ -162,7 +162,7 @@ DEPENDENCIES
   pg (~> 1.2)
   pry
   puma (~> 6)
-  rack-session
+  rack-session (~> 0.3)
   rake (~> 13.0)
   reek
   rerun (~> 0)

@@ -2,12 +2,15 @@ doctype html
 html
   head
     title
-      | Bootstrap5 实例
+      |  TNS 
     meta[charset="utf-8"]
     meta[name="viewport" content="width=device-width, initial-scale=1"]
+    meta[content="width=device-width, initial-scale=1" name="viewport"]
     link[href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css" rel="stylesheet"]
     script[src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"]
+    script[src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"]
   body
+    canvas#myChart[width="1000px" height="600px"]
     .container
       .row
         h2
@@ -17,7 +20,12 @@ html
         .row
           .col-lg-1.col-md-2.col-sm-2
             span.project.attribute
-              | Repo:
+              |  Repo: 
           .col-lg-11.col-md-10.col-sm-6
             span.project.detail
-              = stock_trend.risk
+              = stock_trend.interest_over_time
+
+  script
+      |  var data = 
+      = stock_trend.interest_over_time
+      |var ctx = document.getElementById("myChart").getContext("2d"); var chart = new Chart(ctx, { type: "line", data: { labels: data.map(x=>x.time.slice(0,20)), datasets: [{ label: "交通量", data: data.map(x=>x.value), lineTension: 0, backgroundColor: "#FF5376", borderColor: "#FF5376", fill: false, borderWidth: 2, pointRadius: 5, pointHoverRadius: 7, }] }, options:{ title:{ display: true, text: "Traffic Volume", position: "bottom", fontSize: 24, fontStyle: "normal", fontFamily: "Century Gothic" }, legend:{ display: false }, responsive: false } }); 

@@ -3,7 +3,7 @@
 require 'dry-types'
 require 'dry-struct'
 
-module TWSE
+module GoogleTrend
   module Value
     class Detail < SimpleDelegator
       def initialize(stockname)
