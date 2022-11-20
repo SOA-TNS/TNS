@@ -32,7 +32,9 @@ module GoogleTrend
           hash['value'] = arr[1].to_f
           array.append(hash)
         end
-        array.to_json
+        str = array.to_s
+        str.gsub!("=>", ":")
+        str
       end  
 
         
