@@ -2,9 +2,8 @@
 
 require 'figaro'
 require 'logger'
-require 'roda'
 require 'rack/session'
-require 'sequel'
+require 'roda'
 
 module GoogleTrend
   class App < Roda
@@ -20,23 +19,12 @@ module GoogleTrend
 
     use Rack::Session::Cookie, secret: config.SESSION_SECRET
 
-    configure :app_test do
-      require_relative '../spec/helpers/vcr_helper'
-      VcrHelper.setup_vcr
-      VcrHelper.configure_vcr_for_google_trend
-    end
-
-    # Database Setup
-    configure :development, :test , :app_test do
-      require 'pry'; # for breakpoints
-      ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
-    end
-
-    DB = Sequel.connect(ENV.fetch('DATABASE_URL'))
-    def self.DB = DB # rubocop:disable Naming/MethodName
-
     # Logger Setup
     LOGGER = Logger.new($stderr)
     def self.logger = LOGGER
+
+    configure :development, :test, :app_test do
+      require 'pry'; # for breakpoints
+    end
   end
 end
