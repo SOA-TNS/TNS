@@ -3,7 +3,7 @@
 require_relative 'list_request'
 require 'http'
 
-module CodePraise
+module GoogleTrend
   module Gateway
     # Infrastructure to call CodePraise API
     class Api
@@ -16,22 +16,18 @@ module CodePraise
         @request.get_root.success?
       end
 
-      def projects_list(list)
-        @request.projects_list(list)
+      def stocks_list(list)
+        @request.stocks_list(list)
       end
 
-      def add_project(owner_name, project_name)
-        @request.add_project(owner_name, project_name)
+      def add_stock(qry)
+        @request.add_stock(qry)
       end
 
-      # Gets appraisal of a project folder rom API
-      # - req: ProjectRequestPath
-      #        with #owner_name, #project_name, #folder_name, #project_fullname
-      def appraise(req)
-        @request.get_appraisal(req)
+      def info(req)
+        @request.get_info(req)
       end
 
-      # HTTP request transmitter
       class Request
         def initialize(config)
           @api_host = config.API_HOST
@@ -42,18 +38,16 @@ module CodePraise
           call_api('get')
         end
 
-        def projects_list(list)
-          call_api('get', ['projects'],
-                   'list' => Value::WatchedList.to_encoded(list))
+        def stocks_list(list)
+          call_api('get', ['Gtrend'], 'list' => Value::WatchedList.to_encoded(list))
         end
 
-        def add_project(owner_name, project_name)
-          call_api('post', ['projects', owner_name, project_name])
+        def add_stock(qry)
+          call_api('post', ['Gtrend', qry])
         end
 
-        def get_appraisal(req)
-          call_api('get', ['projects',
-                           req.owner_name, req.project_name, req.folder_name])
+        def get_info(req)
+          call_api('get', ['Gtrend', req])
         end
 
         private
@@ -64,8 +58,15 @@ module CodePraise
         end
 
         def call_api(method, resources = [], params = {})
+          puts("call_api")
+          puts(method)
+          puts(resources)
+          # puts(params)
           api_path = resources.empty? ? @api_host : @api_root
           url = [api_path, resources].flatten.join('/') + params_str(params)
+          puts("url")
+          puts(url)
+          
           HTTP.headers('Accept' => 'application/json').send(method, url)
             .then { |http_response| Response.new(http_response) }
         rescue StandardError

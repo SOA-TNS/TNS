@@ -12,7 +12,7 @@ module GoogleTrend
     plugin :flash
     plugin :all_verbs
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
-    plugin :assets, css: 'bootstrap.css', path: 'app/presentation/assets/css'
+    plugin :assets, path: 'app/presentation/assets',css: 'bootstrap.css'
     plugin :common_logger, $stderr
 
     use Rack::MethodOverride
@@ -34,8 +34,8 @@ module GoogleTrend
           if stocks.none?
             flash.now[:notice] = 'Add a Github project to get started'
           end
-          
-          session[:watching] = stocks.map(&:query)
+
+          session[:watching] = stocks.stocks.map(&:links)
           # viewable_projects = Views::ProjectsList.new(projects)
         end
 
@@ -45,14 +45,18 @@ module GoogleTrend
       routing.on 'Gtrend' do
         routing.is do
           routing.post do # rubocop:disable Metrics/BlockLength
+
             stock_made = Service::AddStock.new.call(routing.params)
+            
             if stock_made.failure?
               flash[:error] = stock_made.failure
               routing.redirect '/'
             end
-            
+
             stock = stock_made.value!
+
             session[:watching].insert(0, stock.query).uniq!
+
             flash[:notice] = 'Project added to your list'
             routing.redirect "Gtrend/#{stock.query}"
           end
@@ -60,12 +64,13 @@ module GoogleTrend
 
         routing.on String do |qry|
           routing.get do
+
             session[:watching] ||= []
 
             result = Service::RiskStock.new.call(
                 watched_list: session[:watching],
                 requested: qry
-                )
+            )
             
             if result.failure?
               flash[:error] = result.failure
