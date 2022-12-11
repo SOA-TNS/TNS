@@ -22,7 +22,8 @@ def time_value(file)
 end
 
 RGT_TOKEN = GoogleTrend::App.config.RGT_TOKEN
-CORRECT = YAML.safe_load(File.read('spec/fixtures/rgt_results.yml'))
+QUERY = ["list"=>"apple"]
+STOCK = "apple"
 
 # Helper method for acceptance tests
 def homepage
