@@ -8,14 +8,14 @@ module GoogleTrend
     class RiskStock
       include Dry::Transaction
 
-      step :ensure_watched_stock
-      step :retrieve_stock
-      step :appraise_risk
+      step :validate_stock
+      step :retrieve_stock_info
+      step :reify_info
 
       private
 
       # Steps
-      def ensure_watched_stock(input)
+      def validate_stock(input)
         if input[:watched_list].include? input[:requested]
           Success(input)
         else
@@ -23,21 +23,21 @@ module GoogleTrend
         end
       end
 
-      def retrieve_stock(input)
-        input[:data_record] = Repository::For.klass(Entity::RgtEntity).find_stock_name(input[:requested])
+      def retrieve_stock_info(input)
+        result = Gateway::Api.new(GoogleTrend::App.config).info(input[:requested])
 
-        input[:data_record] ? Success(input) : Failure('Stock not found')
+        result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError
-        Failure('Having trouble accessing the database')
+        Failure('Cannot get stock info right now; please try again later')
       end
 
-      def appraise_risk(input)
-        input[:risk] = Mapper::DataPreprocessing.new(input[:data_record]).to_entity
-
-        Success(input)
+      def reify_info(stock_info_json)
+        Representer::StockInfo.new(OpenStruct.new)
+          .from_json(stock_info_json)
+          .then { |stock_info| Success(stock_info) }
       rescue StandardError
-        App.logger.error "Could not find: #{input[:requested]}"
-        Failure('Could not find that stock')
+        Failure('Error in our info report -- please try again')
+
       end
 
     end
