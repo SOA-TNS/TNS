@@ -4,7 +4,7 @@ require 'base64'
 require 'dry/monads'
 require 'json'
 
-module CodePraise
+module GoogleTrend
   module Gateway
     module Value
       # List request parser
