@@ -11,6 +11,7 @@ module GoogleTrend
     plugin :halt
     plugin :flash
     plugin :all_verbs
+    plugin :caching
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :assets, path: 'app/presentation/assets',css: 'bootstrap.css'
     plugin :common_logger, $stderr
@@ -79,6 +80,12 @@ module GoogleTrend
             
             stock = result.value!
             stock_trend = Views::MainPageInfo.new(stock[:data_record], stock[:risk])
+
+            # Only use browser caching in production
+            App.configure :production do
+              response.expires 60, public: true
+            end
+            
             view 'Gtrend', locals: { stock_trend: }
           end
         end
