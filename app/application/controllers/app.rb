@@ -77,8 +77,21 @@ module GoogleTrend
               flash[:error] = result.failure
               routing.redirect '/'
             end
+
+
+            # 新增
+            appraisal = OpenStruct.new(result.value!)
+            if appraisal.response.processing?
+              flash[:notice] = 'Project is being cloned and analyzed, ' \
+                               'please check back in a moment.'
+              routing.redirect '/'
+            end
             
-            stock = result.value!
+            # 舊版
+            # stock = result.value!
+
+            stock = appraisal.appraised
+
             stock_trend = Views::MainPageInfo.new(stock[:data_record], stock[:risk])
 
             # Only use browser caching in production

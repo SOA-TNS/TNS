@@ -24,22 +24,24 @@ module GoogleTrend
       end
 
       def retrieve_stock_info(input)
-        result = Gateway::Api.new(GoogleTrend::App.config).info(input[:requested])
+        input[:response] = Gateway::Api.new(GoogleTrend::App.config).info(input[:requested])
 
-        result.success? ? Success(result.payload) : Failure(result.message)
+        input[:response].success? ? Success(input) : Failure(input[:response].message)
       rescue StandardError
         Failure('Cannot get stock info right now; please try again later')
       end
 
-      def reify_info(stock_info_json)
-        Representer::StockInfo.new(OpenStruct.new)
-          .from_json(stock_info_json)
-          .then { |stock_info| Success(stock_info) }
+      def reify_info(input)
+        unless input[:response].processing?
+          Representer::StockInfo.new(OpenStruct.new)
+          .from_json(input[:response].payload)
+          .then { input[:appraised] = _1 }
+        end
+
+        Success(input)
       rescue StandardError
         Failure('Error in our info report -- please try again')
-
       end
-
     end
   end
 end
