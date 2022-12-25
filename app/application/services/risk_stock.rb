@@ -24,6 +24,7 @@ module GoogleTrend
       end
 
       def retrieve_stock_info(input)
+        
         input[:response] = Gateway::Api.new(GoogleTrend::App.config).info(input[:requested])
 
         input[:response].success? ? Success(input) : Failure(input[:response].message)
