@@ -29,8 +29,9 @@ module GoogleTrend
         routing.public
         session[:watching] ||= []
 
-        fm_fear = Service::FmFear.new.call(routing.params).value!
-        fm_fear_view = Views::Fear.new(fm_fear[:fear_greed], fm_fear[:fear_greed_emotion])
+        # fm_fear = Service::FmFear.new.call(routing.params).value!
+        # fm_fear_view = Views::Fear.new(fm_fear[:fear_greed], fm_fear[:fear_greed_emotion])
+        fm_fear_view = ""
         view 'HOME', locals: { fm_fear_view: }
         # view 'HOME'
       end
