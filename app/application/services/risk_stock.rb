@@ -8,24 +8,15 @@ module GoogleTrend
     class RiskStock
       include Dry::Transaction
 
-      step :validate_stock
       step :retrieve_stock_info
       step :reify_info
 
       private
 
       # Steps
-      def validate_stock(input)
-        if input[:watched_list].include? input[:requested]
-          Success(input)
-        else
-          Failure('Please first request this stock to be added to your list')
-        end
-      end
-
+      
       def retrieve_stock_info(input)
         result = Gateway::Api.new(GoogleTrend::App.config).info(input[:requested])
-
         result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError
         Failure('Cannot get stock info right now; please try again later')

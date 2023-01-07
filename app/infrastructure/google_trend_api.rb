@@ -28,6 +28,26 @@ module GoogleTrend
         @request.get_info(req)
       end
 
+      def fear(qry)
+        @request.get_fear(qry)
+      end
+
+      def per(qry)
+        @request.get_per(qry)
+      end
+
+      def div(qry)
+        @request.get_div(qry)
+      end
+
+      def buysell(qry)
+        @request.get_buysell(qry)
+      end
+
+      def news(qry)
+        @request.get_news(qry)
+      end
+
       class Request
         def initialize(config)
           @api_host = config.API_HOST
@@ -46,8 +66,28 @@ module GoogleTrend
           call_api('post', ['Gtrend', qry])
         end
 
-        def get_info(req)
-          call_api('get', ['Gtrend', req])
+        def get_info(qry)
+          call_api('post', ['Risk', qry])
+        end
+
+        def get_fear(qry)
+          call_api('post', ['Fear',qry])
+        end
+
+        def get_per(qry)
+          call_api('post', ['Per',qry])
+        end
+
+        def get_div(qry)
+          call_api('post', ['Div',qry])
+        end
+        
+        def get_buysell(qry)
+          call_api('post', ['BuySell',qry])
+        end
+
+        def get_news(qry)
+          call_api('get', ['News',qry])
         end
 
         private
@@ -58,15 +98,8 @@ module GoogleTrend
         end
 
         def call_api(method, resources = [], params = {})
-          puts("call_api")
-          puts(method)
-          puts(resources)
-          # puts(params)
           api_path = resources.empty? ? @api_host : @api_root
           url = [api_path, resources].flatten.join('/') + params_str(params)
-          puts("url")
-          puts(url)
-          
           HTTP.headers('Accept' => 'application/json').send(method, url)
             .then { |http_response| Response.new(http_response) }
         rescue StandardError

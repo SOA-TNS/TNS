@@ -1,0 +1,37 @@
+doctype html
+html[lang="en"]
+  head
+    title
+      | Bootstrap Example
+    meta[charset="utf-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1"]
+    link[rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"]
+    script[src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.1.min.js"]
+    script[src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"]
+    body
+    .container-fluid.text-center
+      .row_content
+        .col-sm-1.sidenav
+        .col-sm-10.text-left
+          .wrap
+            .search
+              form[action="Gtrend" method="post"]
+                .mb-3.mt-3
+                  center
+                    label.form-label[for="email"]
+                      | SearchStock
+                  input#searchStock.form-control[list="stock_list" name="list" placeholder="Input Stock name e.g., 台積電"]
+                button.btn.btn-primary[type="submit"]
+                  | Submit
+          h3
+            | Fear and Greed index : 
+          h3
+              = fm_fear_view.fear_greed
+          p
+              = fm_fear_view.fear_greed_emotion
+              
+        .col-sm-1.sidenav
+
+    footer.container-fluid.text-center
+      p
+        | Footer Text
