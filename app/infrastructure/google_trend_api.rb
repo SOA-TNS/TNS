@@ -9,6 +9,8 @@ module GoogleTrend
     class Api
       def initialize(config)
         @config = config
+        puts("config")
+        puts(config)
         @request = Request.new(@config)
       end
 
