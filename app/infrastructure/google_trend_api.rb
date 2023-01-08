@@ -9,8 +9,6 @@ module GoogleTrend
     class Api
       def initialize(config)
         @config = config
-        puts("config")
-        puts(config)
         @request = Request.new(@config)
       end
 
@@ -52,6 +50,8 @@ module GoogleTrend
 
       class Request
         def initialize(config)
+          puts("config.API_HOST")
+          puts(config.API_HOST)
           @api_host = config.API_HOST
           @api_root = config.API_HOST + '/api/v1'
         end
