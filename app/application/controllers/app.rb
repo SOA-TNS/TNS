@@ -15,7 +15,7 @@ module GoogleTrend
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :public, root: 'app/presentation/assets/css'
     plugin :assets, path: 'app/presentation/assets',
-                    css: ['Home.css','nicepage.css','Page-2.css','Page-3.css'],js: ['jquery.js','nicepage.js','chart.js','echarts.js']
+                    css: ['Home.css', 'nicepage.css', 'Page-2.css', 'Page-3.css'], js: ['jquery.js', 'nicepage.js', 'chart.js', 'echarts.js']
     plugin :common_logger, $stderr
 
     use Rack::MethodOverride
@@ -28,7 +28,7 @@ module GoogleTrend
         routing.assets
         routing.public
         session[:watching] ||= []
-        fm_fear = Service::FmFear.new.call().value!
+        fm_fear = Service::FmFear.new.call.value!
         fm_fear_view = Views::Fear.new(fm_fear[:fear_greed], fm_fear[:fear_greed_emotion])
         view 'HOME', locals: { fm_fear_view: }
       end
@@ -37,7 +37,7 @@ module GoogleTrend
         routing.assets
         routing.public
         routing.is do
-          routing.post do # rubocop:disable Metrics/BlockLength
+          routing.post do
             stock_made = Service::AddStock.new.call(routing.params)
 
             if stock_made.failure?
@@ -61,8 +61,8 @@ module GoogleTrend
             session[:watching] ||= []
 
             result = Service::RiskStock.new.call(
-                watched_list: session[:watching],
-                requested: qry
+              watched_list: session[:watching],
+              requested: qry
             )
             if result.failure?
               flash[:error] = result.failure
@@ -81,13 +81,13 @@ module GoogleTrend
             fm_div = Service::FmDiv.new.call(qry).value!
             fm_div_view = Views::Div.new(fm_div[:div_yield])
 
-            view 'PAGE', locals: { qry: ,stock_trend: ,fm_per_view: ,fm_buy_view: ,fm_div_view: }
+            view 'PAGE', locals: { qry:, stock_trend:, fm_per_view:, fm_buy_view:, fm_div_view: }
           end
         end
       end
       routing.on 'Per' do
         routing.on String do |qry|
-          routing.post do # rubocop:disable Metrics/BlockLength
+          routing.post do
             fm_per = Service::FmPer.new.call(qry).value!
             fm_per_view = Views::Per.new(fm_per[:per])
           end
@@ -95,7 +95,7 @@ module GoogleTrend
       end
       routing.on 'BuySell' do
         routing.on String do |qry|
-          routing.post do # rubocop:disable Metrics/BlockLength
+          routing.post do
             fm_buysell = Service::FmBuysell.new.call(qry).value!
             fm_buy_view = Views::Buysell.new(fm_buysell[:buy])
           end
@@ -103,7 +103,7 @@ module GoogleTrend
       end
       routing.on 'Div' do
         routing.on String do |qry|
-          routing.post do # rubocop:disable Metrics/BlockLength
+          routing.post do
             fm_div = Service::FmDiv.new.call(qry).value!
             fm_div_view = Views::Div.new(fm_div[:div_yield])
           end
@@ -111,19 +111,19 @@ module GoogleTrend
       end
       routing.on 'Risk' do
         routing.on String do |qry|
-          routing.post do # rubocop:disable Metrics/BlockLength
+          routing.post do
             session[:watching] ||= []
 
             result = Service::RiskStock.new.call(
-                watched_list: session[:watching],
-                requested: qry
+              watched_list: session[:watching],
+              requested: qry
             )
-            
+
             if result.failure?
               flash[:error] = result.failure
               routing.redirect '/'
             end
-            
+
             stock = result.value!
             stock_trend = Views::MainPageInfo.new(stock[:data_record], stock[:risk])
           end
@@ -133,12 +133,12 @@ module GoogleTrend
         routing.assets
         routing.public
         routing.on String do |qry|
-          routing.get do # rubocop:disable Metrics/BlockLength
+          routing.get do
             session[:watching] ||= []
 
             fm_news = Service::FmNews.new.call(qry).value!
             fm_news_view = Views::News.new(fm_news)
-            view 'PAGE3', locals: { qry: ,fm_news_view: }
+            view 'PAGE3', locals: { qry:, fm_news_view: }
           end
         end
       end

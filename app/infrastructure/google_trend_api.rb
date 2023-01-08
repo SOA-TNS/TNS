@@ -51,7 +51,7 @@ module GoogleTrend
       class Request
         def initialize(config)
           @api_host = config.API_HOST
-          @api_root = config.API_HOST + '/api/v1'
+          @api_root = "#{config.API_HOST}/api/v1"
         end
 
         def get_root # rubocop:disable Naming/AccessorMethodName
@@ -71,30 +71,30 @@ module GoogleTrend
         end
 
         def get_fear(qry)
-          call_api('post', ['Fear',qry])
+          call_api('post', ['Fear', qry])
         end
 
         def get_per(qry)
-          call_api('post', ['Per',qry])
+          call_api('post', ['Per', qry])
         end
 
         def get_div(qry)
-          call_api('post', ['Div',qry])
+          call_api('post', ['Div', qry])
         end
-        
+
         def get_buysell(qry)
-          call_api('post', ['BuySell',qry])
+          call_api('post', ['BuySell', qry])
         end
 
         def get_news(qry)
-          call_api('get', ['News',qry])
+          call_api('get', ['News', qry])
         end
 
         private
 
         def params_str(params)
           params.map { |key, value| "#{key}=#{value}" }.join('&')
-            .then { |str| str ? '?' + str : '' }
+            .then { |str| str ? "?#{str}" : '' }
         end
 
         def call_api(method, resources = [], params = {})
@@ -111,7 +111,7 @@ module GoogleTrend
       class Response < SimpleDelegator
         NotFound = Class.new(StandardError)
 
-        SUCCESS_CODES = (200..299).freeze
+        SUCCESS_CODES = (200..299)
 
         def success?
           code.between?(SUCCESS_CODES.first, SUCCESS_CODES.last)

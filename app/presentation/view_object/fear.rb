@@ -9,13 +9,6 @@ module Views
       @fear_greed_emotion = fear_greed_emotion
     end
 
-    def fear_greed
-      @fear_greed
-    end
-
-    def fear_greed_emotion
-      @fear_greed_emotion
-    end
-
+    attr_reader :fear_greed, :fear_greed_emotion
   end
 end

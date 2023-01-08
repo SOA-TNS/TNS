@@ -8,9 +8,6 @@ module Views
       @per = per
     end
 
-    def per
-      @per
-    end
-
+    attr_reader :per
   end
 end

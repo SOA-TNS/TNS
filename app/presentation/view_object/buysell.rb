@@ -8,9 +8,6 @@ module Views
       @buy = buy
     end
 
-    def buy
-      @buy
-    end
-
+    attr_reader :buy
   end
 end

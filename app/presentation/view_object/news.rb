@@ -8,9 +8,6 @@ module Views
       @news = news
     end
 
-    def news
-      @news
-    end
-
+    attr_reader :news
   end
 end

@@ -14,8 +14,8 @@ module GoogleTrend
       private
 
       def request_fear(input)
-          result = Gateway::Api.new(GoogleTrend::App.config).news(CGI.unescape(input))
-          result.success? ? Success(result.payload) : Failure(result.message)
+        result = Gateway::Api.new(GoogleTrend::App.config).news(CGI.unescape(input))
+        result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError => e
         puts e.inspect
         puts e.backtrace

@@ -13,9 +13,9 @@ module GoogleTrend
 
       private
 
-      def request_fear(input)
-          result = Gateway::Api.new(GoogleTrend::App.config).fear("台積電")
-          result.success? ? Success(result.payload) : Failure(result.message)
+      def request_fear(_input)
+        result = Gateway::Api.new(GoogleTrend::App.config).fear('台積電')
+        result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError => e
         puts e.inspect
         puts e.backtrace

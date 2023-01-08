@@ -14,7 +14,7 @@ module GoogleTrend
       private
 
       # Steps
-      
+
       def retrieve_stock_info(input)
         result = Gateway::Api.new(GoogleTrend::App.config).info(input[:requested])
         result.success? ? Success(result.payload) : Failure(result.message)
@@ -28,9 +28,7 @@ module GoogleTrend
           .then { |stock_info| Success(stock_info) }
       rescue StandardError
         Failure('Error in our info report -- please try again')
-
       end
-
     end
   end
 end

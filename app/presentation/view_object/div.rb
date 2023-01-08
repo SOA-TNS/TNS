@@ -8,9 +8,6 @@ module Views
       @div = div
     end
 
-    def div
-      @div
-    end
-
+    attr_reader :div
   end
 end

@@ -14,11 +14,11 @@ module GoogleTrend
       private
 
       def request_stock(input)
-        if(GoogleTrend::Value::StockOverview.new(CGI.unescape(input["list"])).stock_overview)
-          result = Gateway::Api.new(GoogleTrend::App.config).add_stock(CGI.unescape(input["list"]))
+        if GoogleTrend::Value::StockOverview.new(CGI.unescape(input['list'])).stock_overview
+          result = Gateway::Api.new(GoogleTrend::App.config).add_stock(CGI.unescape(input['list']))
           result.success? ? Success(result.payload) : Failure(result.message)
         else
-          Failure("This is not a stock name")
+          Failure('This is not a stock name')
         end
       rescue StandardError => e
         puts e.inspect
