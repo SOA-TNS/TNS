@@ -56,7 +56,7 @@ namespace :quality do
 
   desc 'code style linter'
   task :rubocop do
-    sh 'rubocop'
+    sh 'rubocop --auto-correct-all'
   end
 
   desc 'code smell detector'

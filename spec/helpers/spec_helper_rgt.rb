@@ -22,8 +22,8 @@ def time_value(file)
 end
 
 RGT_TOKEN = GoogleTrend::App.config.RGT_TOKEN
-QUERY = ["list"=>"apple"]
-STOCK = "apple"
+QUERY = ['list'=>'apple'].freeze
+STOCK = 'apple'
 
 # Helper method for acceptance tests
 def homepage
