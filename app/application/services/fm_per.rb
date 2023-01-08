@@ -14,12 +14,14 @@ module GoogleTrend
       private
 
       def request_fear(input)
-          result = Gateway::Api.new(GoogleTrend::App.config).per("台積電")
+          puts("input")
+          puts(CGI.unescape(input))
+          result = Gateway::Api.new(GoogleTrend::App.config).per(CGI.unescape(input))
           result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError => e
         puts e.inspect
         puts e.backtrace
-        Failure('Cannot find fear value right now; please try again later')
+        Failure('Cannot find per value right now; please try again later')
       end
 
       def reify_stock(stock_json)

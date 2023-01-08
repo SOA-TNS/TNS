@@ -14,12 +14,12 @@ module GoogleTrend
       private
 
       def request_fear(input)
-          result = Gateway::Api.new(GoogleTrend::App.config).buysell("台積電")
+          result = Gateway::Api.new(GoogleTrend::App.config).buysell(CGI.unescape(input))
           result.success? ? Success(result.payload) : Failure(result.message)
       rescue StandardError => e
         puts e.inspect
         puts e.backtrace
-        Failure('Cannot find fear value right now; please try again later')
+        Failure('Cannot find buysell value right now; please try again later')
       end
 
       def reify_stock(stock_json)

@@ -31,7 +31,6 @@ module GoogleTrend
         fm_fear = Service::FmFear.new.call().value!
         fm_fear_view = Views::Fear.new(fm_fear[:fear_greed], fm_fear[:fear_greed_emotion])
         view 'HOME', locals: { fm_fear_view: }
-        # view 'HOME'
       end
 
       routing.on 'Gtrend' do
@@ -55,14 +54,6 @@ module GoogleTrend
           end
         end
 
-        # routing.on String do |qry|
-        #   routing.assets
-        #   routing.public
-        #   routing.get do
-        #     view 'PAGE2', locals: { qry: }
-        #   end
-        # end
-
         routing.on String do |qry|
           routing.assets
           routing.public
@@ -73,22 +64,21 @@ module GoogleTrend
                 watched_list: session[:watching],
                 requested: qry
             )
-            
             if result.failure?
               flash[:error] = result.failure
               routing.redirect '/'
             end
-            
+
             stock = result.value!
             stock_trend = Views::MainPageInfo.new(stock[:data_record], stock[:risk])
 
-            fm_per = Service::FmPer.new.call(routing.params).value!
+            fm_per = Service::FmPer.new.call(qry).value!
             fm_per_view = Views::Per.new(fm_per[:per])
 
-            fm_buysell = Service::FmBuysell.new.call(routing.params).value!
+            fm_buysell = Service::FmBuysell.new.call(qry).value!
             fm_buy_view = Views::Buysell.new(fm_buysell[:buy])
 
-            fm_div = Service::FmDiv.new.call(routing.params).value!
+            fm_div = Service::FmDiv.new.call(qry).value!
             fm_div_view = Views::Div.new(fm_div[:div_yield])
 
             view 'PAGE', locals: { qry: ,stock_trend: ,fm_per_view: ,fm_buy_view: ,fm_div_view: }
@@ -98,7 +88,7 @@ module GoogleTrend
       routing.on 'Per' do
         routing.on String do |qry|
           routing.post do # rubocop:disable Metrics/BlockLength
-            fm_per = Service::FmPer.new.call(routing.params).value!
+            fm_per = Service::FmPer.new.call(qry).value!
             fm_per_view = Views::Per.new(fm_per[:per])
           end
         end
@@ -106,7 +96,7 @@ module GoogleTrend
       routing.on 'BuySell' do
         routing.on String do |qry|
           routing.post do # rubocop:disable Metrics/BlockLength
-            fm_buysell = Service::FmBuysell.new.call(routing.params).value!
+            fm_buysell = Service::FmBuysell.new.call(qry).value!
             fm_buy_view = Views::Buysell.new(fm_buysell[:buy])
           end
         end
@@ -114,7 +104,7 @@ module GoogleTrend
       routing.on 'Div' do
         routing.on String do |qry|
           routing.post do # rubocop:disable Metrics/BlockLength
-            fm_div = Service::FmDiv.new.call(routing.params).value!
+            fm_div = Service::FmDiv.new.call(qry).value!
             fm_div_view = Views::Div.new(fm_div[:div_yield])
           end
         end
@@ -144,7 +134,7 @@ module GoogleTrend
           routing.get do # rubocop:disable Metrics/BlockLength
             session[:watching] ||= []
 
-            fm_news = Service::FmNews.new.call(routing.params).value!
+            fm_news = Service::FmNews.new.call(qry).value!
             fm_news_view = Views::News.new(fm_news)
             view 'PAGE3', locals: { qry: ,fm_news_view: }
           end
