@@ -130,6 +130,8 @@ module GoogleTrend
         end
       end
       routing.on 'News' do
+        routing.assets
+        routing.public
         routing.on String do |qry|
           routing.get do # rubocop:disable Metrics/BlockLength
             session[:watching] ||= []
